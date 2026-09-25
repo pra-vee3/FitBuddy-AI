@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>{{ app_name }} - Workout Plan</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', path='styles.css') }}"
+    >
+</head>
+
+<body>
+
+    <div class="container">
+
+        <div class="card">
+
+            <h1>🏋️ Your FitBuddy Plan</h1>
+
+            <div class="user-info">
+
+                <h2>Hello, {{ user.username }}! 👋</h2>
+
+                <p>
+                    <strong>User ID:</strong>
+                    {{ user.user_id }}
+                </p>
+
+                <p>
+                    <strong>Age:</strong>
+                    {{ user.age }}
+                </p>
+
+                <p>
+                    <strong>Weight:</strong>
+                    {{ user.weight }} kg
+                </p>
+
+                <p>
+                    <strong>Goal:</strong>
+                    {{ user.goal }}
+                </p>
+
+                <p>
+                    <strong>Intensity:</strong>
+                    {{ user.intensity }}
+                </p>
+
+            </div>
+
+
+            {% if message %}
+                <div class="success">
+                    {{ message }}
+                </div>
+            {% endif %}
+
+
+            <div class="plan-section">
+
+                <h2>📅 7-Day Workout Plan</h2>
+
+                {% if plan.updated_plan %}
+
+                    <div class="plan-content">
+                        <pre>{{ plan.updated_plan }}</pre>
+                    </div>
+
+                {% else %}
+
+                    <div class="plan-content">
+                        <pre>{{ plan.original_plan }}</pre>
+                    </div>
+
+                {% endif %}
+
+            </div>
+
+
+            <div class="nutrition-section">
+
+                <h2>🥗 Nutrition Tip</h2>
+
+                <p>
+                    {{ plan.nutrition_tip }}
+                </p>
+
+            </div>
+
+
+            {% if plan.feedback %}
+
+                <div class="feedback-section">
+
+                    <h2>💬 Your Feedback</h2>
+
+                    <p>
+                        {{ plan.feedback }}
+                    </p>
+
+                </div>
+
+            {% endif %}
+
+
+            <div class="feedback-form">
+
+                <h2>🔄 Improve Your Plan</h2>
+
+                <p>
+                    Tell FitBuddy what you want to change.
+                </p>
+
+                <form
+                    action="/submit-feedback"
+                    method="post"
+                >
+
+                    <input
+                        type="hidden"
+                        name="user_id"
+                        value="{{ user.user_id }}"
+                    >
+
+                    <textarea
+                        name="feedback"
+                        rows="5"
+                        placeholder="Example: Make the workout easier and reduce cardio..."
+                        required
+                    ></textarea>
+
+                    <button
+                        type="submit"
+                        class="btn"
+                    >
+                        Update My Plan
+                    </button>
+
+                </form>
+
+            </div>
+
+
+            <div class="navigation">
+
+                <a
+                    href="/"
+                    class="btn secondary-btn"
+                >
+                    ← Create Another Plan
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+</html>
